@@ -1,25 +1,30 @@
 import 'dart:async';
+
 import 'package:flutter/material.dart';
 
 /// A [StreamBuilder] alternative that provides builder and event callbacks.
 class MainStream<T> extends StreamBuilderBase<T, AsyncSnapshot<T>> {
   final ValueChanged<T> onData;
+  final ValueChanged<T> onEmptyData;
   final ValueChanged<Object> onError;
   final VoidCallback onDone;
   final T initialData;
   final WidgetBuilder busyBuilder;
   final Widget Function(BuildContext, T) dataBuilder;
+  final Widget Function(BuildContext, T) emptyDataBuilder;
   final Widget Function(BuildContext, Object) errorBuilder;
 
   const MainStream({
     Key key,
     @required Stream<T> stream,
     this.onData,
+    this.onEmptyData,
     this.onError,
     this.onDone,
     this.initialData,
     this.busyBuilder,
     this.dataBuilder,
+    this.emptyDataBuilder,
     this.errorBuilder,
   })  : assert(stream != null),
         super(key: key, stream: stream);
@@ -32,13 +37,27 @@ class MainStream<T> extends StreamBuilderBase<T, AsyncSnapshot<T>> {
 
   @override
   AsyncSnapshot<T> afterData(AsyncSnapshot<T> current, T data) {
-    if (onData != null) onData(data);
+    var emptyData = false;
+
+    if (data == null) {
+      emptyData = true;
+    } else if (data is List && data.isEmpty) {
+      emptyData = true;
+    }
+
+    if (emptyData) {
+      if (onEmptyData != null) onEmptyData(data);
+    } else {
+      if (onData != null) onData(data);
+    }
     return AsyncSnapshot<T>.withData(ConnectionState.active, data);
   }
 
   @override
   AsyncSnapshot<T> afterError(AsyncSnapshot<T> current, Object error) {
-    if (onError != null) onError(error);
+    if (onError != null) {
+      onError(error);
+    } else {}
     return AsyncSnapshot<T>.withError(ConnectionState.active, error);
   }
 
@@ -75,10 +94,19 @@ class MainStream<T> extends StreamBuilderBase<T, AsyncSnapshot<T>> {
   }
 
   Widget _handleData(BuildContext context, T data) {
-    if (dataBuilder != null) {
-      return dataBuilder(context, data);
+    var emptyData = false;
+
+    if (data == null) {
+      emptyData = true;
+    } else if (data is List && data.isEmpty) {
+      emptyData = true;
     }
-    return _defaultWidget();
+
+    if (emptyData) {
+      return emptyDataBuilder != null ? emptyDataBuilder(context, data) : _defaultEmptyWidget();
+    } else {
+      return dataBuilder != null ? dataBuilder(context, data) : _defaultWidget();
+    }
   }
 
   Widget _handleSnapshot(BuildContext context, AsyncSnapshot<T> snapshot) {
@@ -92,10 +120,13 @@ class MainStream<T> extends StreamBuilderBase<T, AsyncSnapshot<T>> {
     if (errorBuilder != null) {
       return errorBuilder(context, error);
     }
-    return _defaultWidget();
+    return _defaultErrorWidget();
   }
 
   Widget _defaultBusyWidget() => const Center(child: CircularProgressIndicator());
+
+  Widget _defaultErrorWidget() => const Center(child: Icon(Icons.error, size: 28.0));
+  Widget _defaultEmptyWidget() => const Center(child: Icon(Icons.radio_button_unchecked, size: 28.0));
 
   Widget _defaultWidget() => const SizedBox.shrink();
 }

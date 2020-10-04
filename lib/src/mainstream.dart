@@ -57,7 +57,9 @@ class MainStream<T> extends StreamBuilderBase<T, AsyncSnapshot<T>> {
   AsyncSnapshot<T> afterError(AsyncSnapshot<T> current, Object error) {
     if (onError != null) {
       onError(error);
-    } else {}
+    } else {
+      print(error);
+    }
     return AsyncSnapshot<T>.withError(ConnectionState.active, error);
   }
 

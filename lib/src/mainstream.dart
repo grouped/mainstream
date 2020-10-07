@@ -128,7 +128,12 @@ class MainStream<T> extends StreamBuilderBase<T, AsyncSnapshot<T>> {
   Widget _defaultBusyWidget() => const Center(child: CircularProgressIndicator());
 
   Widget _defaultErrorWidget(error) => _EmptyErrorWidget(error);
-  Widget _defaultEmptyWidget() => const Center(child: Icon(Icons.radio_button_unchecked, size: 28.0));
+  Widget _defaultEmptyWidget() => const Center(
+        child: Padding(
+          padding: EdgeInsets.all(20.0),
+          child: Icon(Icons.radio_button_unchecked, size: 28.0),
+        ),
+      );
 
   Widget _defaultWidget() => const SizedBox.shrink();
 }
@@ -150,15 +155,18 @@ class __EmptyErrorWidgetState extends State<_EmptyErrorWidget> {
       child: Column(
         children: [
           InkWell(
-            onTap: () => errorVisible = !errorVisible,
+            onTap: () => setState(() => errorVisible = !errorVisible),
             child: Padding(
-              padding: const EdgeInsets.all(24.0),
+              padding: const EdgeInsets.all(20.0),
               child: Icon(Icons.error, size: 28.0),
             ),
           ),
           Visibility(
             visible: errorVisible,
-            child: Text(widget.error.toString()),
+            child: Padding(
+              padding: const EdgeInsets.all(30.0),
+              child: Text(widget.error.toString(), style: TextStyle(fontSize: 11.0)),
+            ),
           ),
         ],
       ),

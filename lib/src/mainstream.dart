@@ -122,13 +122,46 @@ class MainStream<T> extends StreamBuilderBase<T, AsyncSnapshot<T>> {
     if (errorBuilder != null) {
       return errorBuilder(context, error);
     }
-    return _defaultErrorWidget();
+    return _defaultErrorWidget(error);
   }
 
   Widget _defaultBusyWidget() => const Center(child: CircularProgressIndicator());
 
-  Widget _defaultErrorWidget() => const Center(child: Icon(Icons.error, size: 28.0));
+  Widget _defaultErrorWidget(error) => _EmptyErrorWidget(error);
   Widget _defaultEmptyWidget() => const Center(child: Icon(Icons.radio_button_unchecked, size: 28.0));
 
   Widget _defaultWidget() => const SizedBox.shrink();
+}
+
+class _EmptyErrorWidget extends StatefulWidget {
+  final dynamic error;
+  const _EmptyErrorWidget(this.error);
+
+  @override
+  __EmptyErrorWidgetState createState() => __EmptyErrorWidgetState();
+}
+
+class __EmptyErrorWidgetState extends State<_EmptyErrorWidget> {
+  bool errorVisible = false;
+
+  @override
+  Widget build(BuildContext context) {
+    return Center(
+      child: Column(
+        children: [
+          InkWell(
+            onTap: () => errorVisible = !errorVisible,
+            child: Padding(
+              padding: const EdgeInsets.all(24.0),
+              child: Icon(Icons.error, size: 28.0),
+            ),
+          ),
+          Visibility(
+            visible: errorVisible,
+            child: Text(widget.error.toString()),
+          ),
+        ],
+      ),
+    );
+  }
 }

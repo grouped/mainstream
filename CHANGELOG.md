@@ -1,3 +1,4 @@
 ## 0.1.0
 
-* Initial Open Source release
+* Support for visual errors
+* Default handlers for edge cases

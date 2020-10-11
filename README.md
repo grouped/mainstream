@@ -1,6 +1,6 @@
 # mainstream
 
-A `StreamBuilder` alternative that provides builder and event callbacks.
+A `StreamBuilder` alternative that provides builder and event callbacks including visual feedbacks.
 
 ![](screenshot.png)
 
@@ -93,8 +93,12 @@ The optional `dataBuilder` displays a widget when the Stream's last event it a s
 
 The optional `errorBuilder` displays a widget when the `Stream` last event is an error, typically an `Error` or `Exception`.
 
+The optional `emptyDataBuilder` displays a widget when the `Stream` data is empty. Empty is calculated as `null` or `T.isEmpty` if `T` is a `List` or `Map`
+
 The optional `onData` callback can be used to handle a successful data event by displaying an alert dialog or performing navigation, for example. This can be used in place of or together with the `dataBuilder`. This will **not** be retriggered as a result of a widget rebuild.
 
 The optional `onError` callback can be used to handle an error event by displaying an alert dialog or sending to a logging provider, for example. It can be used in place of or together with the `errorBuilder`. This will **not** be retriggered as a result of a widget rebuild.
 
 The optional `onDone` callback can be used to handle a Stream's done event. This will **not** be retriggered as a result of a widget rebuild.
+
+The optional `onEmptyData` callback can be used to handle a Stream's empty event. Empty is calculated as `null` or `T.isEmpty` if `T` is a `List` or `Map`

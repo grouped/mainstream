@@ -43,6 +43,8 @@ class MainStream<T> extends StreamBuilderBase<T, AsyncSnapshot<T>> {
       emptyData = true;
     } else if (data is List && data.isEmpty) {
       emptyData = true;
+    } else if (data is Map && data.isEmpty) {
+      emptyData = true;
     }
 
     if (emptyData) {
@@ -101,6 +103,8 @@ class MainStream<T> extends StreamBuilderBase<T, AsyncSnapshot<T>> {
     if (data == null) {
       emptyData = true;
     } else if (data is List && data.isEmpty) {
+      emptyData = true;
+    } else if (data is Map && data.isEmpty) {
       emptyData = true;
     }
 

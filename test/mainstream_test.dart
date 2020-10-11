@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:mainstream_extended/mainstream.dart';
+import 'package:mainstream_extended/mainstream_extended.dart';
 
 // ignore_for_file: missing_required_param
 
@@ -25,19 +25,16 @@ void main() {
       expect(find.text(text), findsOneWidget);
     });
 
-    testWidgets('initially shows default busy widget if busyBuilder is null',
-        (tester) async {
+    testWidgets('initially shows default busy widget if busyBuilder is null', (tester) async {
       final stream = Stream.value(0);
       final widget = MaterialApp(
         home: MainStream(stream: stream),
       );
       await tester.pumpWidget(widget);
-      expect(find.byWidgetPredicate((w) => w is CircularProgressIndicator),
-          findsOneWidget);
+      expect(find.byWidgetPredicate((w) => w is CircularProgressIndicator), findsOneWidget);
     });
 
-    testWidgets('initially shows dataBuilder if initialData is not null',
-        (tester) async {
+    testWidgets('initially shows dataBuilder if initialData is not null', (tester) async {
       final initialData = 0;
       final nextData = 1;
       final stream = Stream.value(nextData);

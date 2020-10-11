@@ -1,5 +1,7 @@
 # mainstream_extended
 
+This project is based on [mainstream](https://pub.dev/packages/mainstream) by Very Good Ventures. Thanks @[verygood.ventures](https://pub.dev/publishers/verygood.ventures) for your hard work.
+
 A `StreamBuilder` alternative that provides builder and event callbacks including visual feedbacks.
 
 ![](screenshot.png)

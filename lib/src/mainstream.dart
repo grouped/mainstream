@@ -30,10 +30,12 @@ class MainStream<T> extends StreamBuilderBase<T, AsyncSnapshot<T>> {
         super(key: key, stream: stream);
 
   @override
-  AsyncSnapshot<T> initial() => AsyncSnapshot<T>.withData(ConnectionState.none, initialData);
+  AsyncSnapshot<T> initial() =>
+      AsyncSnapshot<T>.withData(ConnectionState.none, initialData);
 
   @override
-  AsyncSnapshot<T> afterConnected(AsyncSnapshot<T> current) => current.inState(ConnectionState.waiting);
+  AsyncSnapshot<T> afterConnected(AsyncSnapshot<T> current) =>
+      current.inState(ConnectionState.waiting);
 
   @override
   AsyncSnapshot<T> afterData(AsyncSnapshot<T> current, T data) {
@@ -72,7 +74,8 @@ class MainStream<T> extends StreamBuilderBase<T, AsyncSnapshot<T>> {
   }
 
   @override
-  AsyncSnapshot<T> afterDisconnected(AsyncSnapshot<T> current) => current.inState(ConnectionState.none);
+  AsyncSnapshot<T> afterDisconnected(AsyncSnapshot<T> current) =>
+      current.inState(ConnectionState.none);
 
   @override
   Widget build(BuildContext context, AsyncSnapshot<T> snapshot) {
@@ -109,9 +112,13 @@ class MainStream<T> extends StreamBuilderBase<T, AsyncSnapshot<T>> {
     }
 
     if (emptyData) {
-      return emptyDataBuilder != null ? emptyDataBuilder(context, data) : _defaultEmptyWidget();
+      return emptyDataBuilder != null
+          ? emptyDataBuilder(context, data)
+          : _defaultEmptyWidget();
     } else {
-      return dataBuilder != null ? dataBuilder(context, data) : _defaultWidget();
+      return dataBuilder != null
+          ? dataBuilder(context, data)
+          : _defaultWidget();
     }
   }
 
@@ -129,7 +136,8 @@ class MainStream<T> extends StreamBuilderBase<T, AsyncSnapshot<T>> {
     return _defaultErrorWidget(error);
   }
 
-  Widget _defaultBusyWidget() => const Center(child: CircularProgressIndicator());
+  Widget _defaultBusyWidget() =>
+      const Center(child: CircularProgressIndicator());
 
   Widget _defaultErrorWidget(error) => _EmptyErrorWidget(error);
   Widget _defaultEmptyWidget() => const Center(
@@ -156,23 +164,14 @@ class __EmptyErrorWidgetState extends State<_EmptyErrorWidget> {
   @override
   Widget build(BuildContext context) {
     return Center(
-      child: Column(
-        children: [
-          InkWell(
-            onTap: () => setState(() => errorVisible = !errorVisible),
-            child: Padding(
-              padding: const EdgeInsets.all(20.0),
-              child: Icon(Icons.error, size: 28.0),
-            ),
-          ),
-          Visibility(
-            visible: errorVisible,
-            child: Padding(
-              padding: const EdgeInsets.all(30.0),
-              child: Text(widget.error.toString(), style: TextStyle(fontSize: 11.0)),
-            ),
-          ),
-        ],
+      child: InkWell(
+        onTap: () => setState(() => errorVisible = !errorVisible),
+        child: Padding(
+          padding: const EdgeInsets.all(30.0),
+          child: errorVisible
+              ? Text(widget.error.toString(), style: TextStyle(fontSize: 11.0))
+              : Icon(Icons.error, size: 28.0),
+        ),
       ),
     );
   }

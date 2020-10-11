@@ -17,7 +17,10 @@ class MyApp extends StatelessWidget {
   }
 }
 
-final myStream = Stream<int>.periodic(Duration(seconds: 1), (x) => (x == 3) ? throw Exception('oops') : x).take(5);
+final myStream = Stream<int>.periodic(Duration(seconds: 3), (x) {
+  if (x == 2) throw Exception('Oops!');
+  return (x == 3) ? null : x;
+}).take(5);
 
 class Home extends StatelessWidget {
   @override
@@ -26,28 +29,8 @@ class Home extends StatelessWidget {
       body: Center(
         child: MainStream<int>(
           stream: myStream,
-          onData: (data) => print(data),
-          onError: (error) => _showAlert(context, error.toString()),
-          onDone: () => print('Done!'),
-          busyBuilder: (_) => CircularProgressIndicator(),
           dataBuilder: (_, data) => Text(data.toString()),
-          errorBuilder: (_, error) => Text(error.toString()),
         ),
-      ),
-    );
-  }
-
-  void _showAlert(BuildContext context, String text) {
-    showDialog(
-      context: context,
-      child: AlertDialog(
-        content: Text(text),
-        actions: <Widget>[
-          FlatButton(
-            child: Text('OK'),
-            onPressed: () => Navigator.of(context).pop(),
-          )
-        ],
       ),
     );
   }

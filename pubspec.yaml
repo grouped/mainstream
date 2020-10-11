@@ -1,5 +1,5 @@
 name: mainstream_extended
-description: [Fork of mainstream] A StreamBuilder alternative that provides builder and event callbacks including default visual handlers.
+description: <Fork of mainstream> A StreamBuilder alternative that provides builder and event callbacks including default visual handlers.
 version: 0.1.0
 homepage: https://github.com/grouped/mainstream_extended
 

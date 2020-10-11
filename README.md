@@ -1,4 +1,4 @@
-# mainstream
+# mainstream_extended
 
 A `StreamBuilder` alternative that provides builder and event callbacks including visual feedbacks.
 

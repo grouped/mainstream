@@ -1,6 +1,7 @@
 import 'dart:async';
+
 import 'package:flutter/material.dart';
-import 'package:mainstream/mainstream.dart';
+import 'package:mainstream_extended/mainstream.dart';
 
 void main() {
   runApp(MyApp());

@@ -2,7 +2,7 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 
-/// A [StreamBuilder] alternative that provides builder and event callbacks.
+/// A [StreamBuilder] alternative that provides builder and event callbacks including default visual handlers
 class MainStream<T> extends StreamBuilderBase<T, AsyncSnapshot<T>> {
   final ValueChanged<T> onData;
   final ValueChanged<T> onEmptyData;

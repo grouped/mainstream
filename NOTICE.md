@@ -1,6 +1,8 @@
+This project is based on [mainstream](https://pub.dev/packages/mainstream) by Very Good Ventures. Thanks @[verygood.ventures](https://pub.dev/publishers/verygood.ventures) for your hard work.
+
 MIT License
 
-Copyright (c) 2020 Arif Amirani
+Copyright (c) 2020 Very Good Ventures
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
